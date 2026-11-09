@@ -4,7 +4,7 @@ WITH tagged AS (
     SELECT o.*,
            CASE WHEN order_month BETWEEN '2009-12' AND '2010-11' THEN 'FY2010'
                 WHEN order_month BETWEEN '2010-12' AND '2011-11' THEN 'FY2011' END AS fiscal_year
-    FROM v_orders o
+    FROM fact_orders o
 )
 SELECT fiscal_year,
        ROUND(SUM(order_value), 2)                                  AS revenue,

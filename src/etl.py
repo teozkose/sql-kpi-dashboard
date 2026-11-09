@@ -1,9 +1,10 @@
 """Load the raw invoice lines into a small SQLite warehouse (data/retail.db).
 
-Schema (one fact table, two dimensions):
+Schema (order header and order lines, two dimensions, returns kept apart):
     dim_customer(customer_id, country, first_order_date, cohort_month)
     dim_product(stock_code, description)
-    fact_sales(invoice, invoice_date, order_month, customer_id, stock_code, quantity, unit_price, revenue)
+    fact_orders(invoice, order_date, order_month, customer_id, order_value, units)
+    fact_order_lines(invoice, stock_code, quantity, unit_price)
     fact_returns(invoice, invoice_date, order_month, customer_id, stock_code, quantity, revenue)
 
 Cleaning rules, applied in this order:
@@ -12,7 +13,7 @@ Cleaning rules, applied in this order:
       a stock code that starts with five digits
     - invoices starting with "C" are cancellations and go to fact_returns
     - sales need quantity > 0 and price > 0
-    - lines without a customer id stay in fact_sales (they are real revenue) with customer_id NULL;
+    - lines without a customer id stay in the sales tables (they are real revenue) with customer_id NULL;
       customer-level queries filter them out
 """
 import os
@@ -74,15 +75,23 @@ def main() -> None:
         os.remove(DB)
     con = sqlite3.connect(DB)
     con.executescript(open(os.path.join(ROOT, "sql", "schema.sql")).read())
-    fact_cols = ["invoice", "invoice_date", "order_month", "customer_id", "stock_code", "quantity",
-                 "unit_price", "revenue"]
+    sales["invoice"] = sales["invoice"].astype(int)
+    orders = (sales.groupby("invoice")
+              .agg(order_date=("invoice_date", "min"), order_month=("order_month", "min"),
+                   customer_id=("customer_id", "first"), order_value=("revenue", "sum"),
+                   units=("quantity", "sum"))
+              .reset_index())
+    orders["order_value"] = orders["order_value"].round(2)
     customers.to_sql("dim_customer", con, if_exists="append", index=False)
     products.to_sql("dim_product", con, if_exists="append", index=False)
-    sales[fact_cols].to_sql("fact_sales", con, if_exists="append", index=False, chunksize=50_000)
-    returns[[c for c in fact_cols if c != "unit_price"]].to_sql(
+    orders.to_sql("fact_orders", con, if_exists="append", index=False, chunksize=50_000)
+    sales[["invoice", "stock_code", "quantity", "unit_price"]].to_sql(
+        "fact_order_lines", con, if_exists="append", index=False, chunksize=50_000)
+    returns[["invoice", "invoice_date", "order_month", "customer_id", "stock_code", "quantity", "revenue"]].to_sql(
         "fact_returns", con, if_exists="append", index=False, chunksize=50_000)
     con.commit()
-    for t in ("dim_customer", "dim_product", "fact_sales", "fact_returns"):
+    con.execute("VACUUM")
+    for t in ("dim_customer", "dim_product", "fact_orders", "fact_order_lines", "fact_returns"):
         stats[f"rows_{t}"] = con.execute(f"SELECT COUNT(*) FROM {t}").fetchone()[0]
     con.close()
 

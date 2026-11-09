@@ -87,7 +87,8 @@
   "return_lines": 17914,
   "rows_dim_customer": 5852,
   "rows_dim_product": 4878,
-  "rows_fact_sales": 1003214,
+  "rows_fact_orders": 39516,
+  "rows_fact_order_lines": 1003214,
   "rows_fact_returns": 17914
  }
 }

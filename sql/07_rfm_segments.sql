@@ -5,7 +5,7 @@ WITH base AS (
            CAST(JULIANDAY('2011-12-01') - JULIANDAY(MAX(order_date)) AS INTEGER) AS recency_days,
            COUNT(*)                                                           AS frequency,
            SUM(order_value)                                                   AS monetary
-    FROM v_orders
+    FROM fact_orders
     WHERE customer_id IS NOT NULL AND order_month BETWEEN '2010-12' AND '2011-11'
     GROUP BY customer_id
 ),

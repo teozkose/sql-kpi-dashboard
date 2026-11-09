@@ -4,7 +4,7 @@ WITH product_revenue AS (
            SUM(revenue)              AS revenue,
            SUM(quantity)             AS units,
            COUNT(DISTINCT invoice)   AS orders
-    FROM fact_sales
+    FROM v_sales_lines
     WHERE order_month BETWEEN '2010-12' AND '2011-11'
     GROUP BY stock_code
 ),

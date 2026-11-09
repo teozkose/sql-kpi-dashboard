@@ -1,7 +1,7 @@
 -- How concentrated is FY2011 revenue? Customers ranked into deciles by spend.
 WITH spend AS (
     SELECT customer_id, SUM(order_value) AS revenue
-    FROM v_orders
+    FROM fact_orders
     WHERE customer_id IS NOT NULL AND order_month BETWEEN '2010-12' AND '2011-11'
     GROUP BY customer_id
 ),

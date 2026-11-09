@@ -47,18 +47,19 @@ The top 15 products make up {{TOP15}} of revenue; the catalogue is long-tailed.
 [UCI Online Retail II](https://archive.ics.uci.edu/dataset/502/online+retail+ii) (CC BY 4.0): {{RAW}} invoice lines, Dec 2009 to Dec 2011, amounts in GBP. `src/etl.py` drops {{DUPES}} exact duplicate lines and {{NONPROD}} non-product lines (postage, fees, manual adjustments), moves cancellations to their own table, and drops {{OTHER}} lines with zero price or other bad quantities. Lines without a customer id are guest checkouts: they count toward revenue and orders but not toward customer metrics.
 
 ```
-dim_customer  {{CUSTOMERS}} rows   customer_id, country, first_order_date, cohort_month
-dim_product   {{PRODUCTS}} rows   stock_code, description
-fact_sales    {{SALES}} rows   one row per invoice line
-fact_returns  {{RETURNS}} rows   cancelled lines
-v_orders      view, one row per invoice
+dim_customer      {{CUSTOMERS}} rows   customer_id, country, first_order_date, cohort_month
+dim_product       {{PRODUCTS}} rows   stock_code, description
+fact_orders       {{ORDERS}} rows   one row per invoice, with order value and units
+fact_order_lines  {{LINES}} rows   one row per product on an invoice
+fact_returns      {{RETURNS}} rows   cancelled lines
+v_sales_lines     view: order lines with their month and revenue
 ```
 
 ## How it works
 
 ```
 data/download.py          download the workbook, cache as parquet (not committed)
-sql/schema.sql            tables, indexes and the v_orders view
+sql/schema.sql            tables, indexes and the v_sales_lines view
 sql/01..09_*.sql          one business question per file
 src/etl.py                clean and load data/retail.db
 src/kpis.py               run every query, save results/tables/*.csv, metrics.json, figures

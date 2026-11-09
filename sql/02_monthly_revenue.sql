@@ -4,7 +4,7 @@ WITH monthly AS (
            SUM(order_value)            AS revenue,
            COUNT(*)                    AS orders,
            COUNT(DISTINCT customer_id) AS customers
-    FROM v_orders
+    FROM fact_orders
     WHERE order_month <= '2011-11'
     GROUP BY order_month
 )

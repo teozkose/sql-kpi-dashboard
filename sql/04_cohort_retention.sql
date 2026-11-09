@@ -5,7 +5,7 @@ WITH activity AS (
            (CAST(SUBSTR(o.order_month, 1, 4) AS INTEGER) * 12 + CAST(SUBSTR(o.order_month, 6, 2) AS INTEGER))
          - (CAST(SUBSTR(c.cohort_month, 1, 4) AS INTEGER) * 12 + CAST(SUBSTR(c.cohort_month, 6, 2) AS INTEGER))
                AS months_since
-    FROM v_orders o
+    FROM fact_orders o
     JOIN dim_customer c ON c.customer_id = o.customer_id
     WHERE o.order_month <= '2011-11'
 ),

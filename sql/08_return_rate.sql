@@ -1,5 +1,5 @@
 -- Monthly return rate: value of cancelled lines as a share of gross sales value.
-WITH s AS (SELECT order_month, SUM(revenue) AS gross FROM fact_sales GROUP BY order_month),
+WITH s AS (SELECT order_month, SUM(revenue) AS gross FROM v_sales_lines GROUP BY order_month),
      r AS (SELECT order_month, -SUM(revenue) AS returned FROM fact_returns GROUP BY order_month)
 SELECT s.order_month,
        ROUND(s.gross, 2)                              AS gross_sales,

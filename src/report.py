@@ -67,7 +67,7 @@ e = m["etl"]
 fill = {
     "FINDINGS": findings, "KPI_TABLE": kpi_rows, "RFM_TABLE": rfm_rows, "PRODUCT_TABLE": prod_rows,
     "RAW": f"{e['raw_lines']:,}", "DUPES": f"{e['duplicates_dropped']:,}", "NONPROD": f"{e['non_product_lines_dropped']:,}",
-    "OTHER": f"{e['other_lines_dropped']:,}", "SALES": f"{e['rows_fact_sales']:,}", "RETURNS": f"{e['rows_fact_returns']:,}",
+    "OTHER": f"{e['other_lines_dropped']:,}", "ORDERS": f"{e['rows_fact_orders']:,}", "LINES": f"{e['rows_fact_order_lines']:,}", "RETURNS": f"{e['rows_fact_returns']:,}",
     "CUSTOMERS": f"{e['rows_dim_customer']:,}", "PRODUCTS": f"{e['rows_dim_product']:,}",
     "DEC_SIZE": f"{ret['dec2009_cohort_size']:,}", "DEC_12": pct(ret["dec2009_month_12"]),
     "TOP15": pct(m["top_product"]["top15_share"]),
