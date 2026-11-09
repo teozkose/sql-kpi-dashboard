@@ -1,0 +1,93 @@
+{
+ "period": {
+  "fy2010": "2009-12 to 2010-11",
+  "fy2011": "2010-12 to 2011-11",
+  "data_end": "2011-12-09"
+ },
+ "fy2011": {
+  "revenue": 9632333.24,
+  "orders": 18957.0,
+  "customers": 4293.0,
+  "avg_order_value": 508.11,
+  "revenue_per_customer": 1915.91,
+  "orders_per_customer": 4.11
+ },
+ "fy2010": {
+  "revenue": 9395871.28,
+  "orders": 19743.0,
+  "customers": 4239.0,
+  "avg_order_value": 475.91,
+  "revenue_per_customer": 1965.4,
+  "orders_per_customer": 4.29
+ },
+ "growth": {
+  "revenue": 0.0252,
+  "orders": -0.0398,
+  "customers": 0.0127,
+  "avg_order_value": 0.0677,
+  "revenue_per_customer": -0.0252,
+  "orders_per_customer": -0.042
+ },
+ "peak_month": {
+  "month": "2011-11",
+  "revenue": 1452112.69
+ },
+ "nov_2011_yoy": 0.0158,
+ "sep_nov_share_fy2011": 0.3721,
+ "retention": {
+  "month_1_first_year_cohorts": 0.2019,
+  "month_3_first_year_cohorts": 0.212,
+  "month_12_first_year_cohorts": 0.1843,
+  "dec2009_cohort_size": 951,
+  "dec2009_month_12": 0.3764,
+  "dec2009_month_23": 0.4059
+ },
+ "returning_revenue_share_fy2011": 0.9119,
+ "rfm": {
+  "champions_customer_share": 0.2562,
+  "champions_revenue_share": 0.6841,
+  "champions_avg_orders": 9.71,
+  "at_risk_customers": 668,
+  "at_risk_revenue": 863978.93
+ },
+ "concentration": {
+  "top10pct_share": 0.6059,
+  "top20pct_share": 0.7404
+ },
+ "top_product": {
+  "description": "REGENCY CAKESTAND 3 TIER",
+  "revenue": 168162.42,
+  "top15_share": 0.1064
+ },
+ "countries": {
+  "uk_share": 0.8235,
+  "count": 37,
+  "next": [
+   {
+    "country": "Netherlands",
+    "share": 0.0331
+   },
+   {
+    "country": "EIRE",
+    "share": 0.0304
+   },
+   {
+    "country": "Germany",
+    "share": 0.0242
+   }
+  ]
+ },
+ "return_rate_fy2011": 0.0313,
+ "etl": {
+  "raw_lines": 1067371,
+  "duplicates_dropped": 34335,
+  "non_product_lines_dropped": 5980,
+  "other_lines_dropped": 5928,
+  "sales_lines": 1003214,
+  "return_lines": 17914,
+  "rows_dim_customer": 5852,
+  "rows_dim_product": 4878,
+  "rows_fact_sales": 1003214,
+  "rows_fact_returns": 17914
+ }
+}

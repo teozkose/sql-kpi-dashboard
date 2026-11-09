@@ -1,0 +1,7 @@
+segment,customers,avg_recency_days,avg_orders,avg_revenue,revenue,revenue_share,customer_share
+1 Champions,1100,12.0,9.71,5115.44,5626980.72,0.6841,0.2562
+2 Loyal,807,36.1,3.5,1307.56,1055198.56,0.1283,0.188
+3 New or promising,330,15.1,1.16,317.38,104735.21,0.0127,0.0769
+4 At risk,668,148.1,3.34,1293.38,863978.93,0.105,0.1556
+5 Needs attention,338,49.2,1.09,394.79,133439.6,0.0162,0.0787
+6 Lapsed,1050,215.6,1.08,419.68,440666.54,0.0536,0.2446
