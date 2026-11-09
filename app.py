@@ -21,7 +21,8 @@ def query(name: str) -> pd.DataFrame:
 
 st.set_page_config(page_title="Retail KPIs", layout="wide")
 st.title("Retail KPI dashboard")
-st.caption("UK online gift retailer, Dec 2009 to Nov 2011. Fiscal years run December to November. Amounts in GBP.")
+st.caption("UK online gift retailer, Dec 2009 to Nov 2011. Tiles show FY2011 (Dec 2010 to Nov 2011) against FY2010. "
+           "Amounts in GBP.")
 
 if not os.path.exists(DB):
     st.error("data/retail.db not found. Run ./run_all.sh first.")
@@ -37,7 +38,8 @@ for col, (label, field, fmt) in zip(cols, [
     ("Avg order value", "avg_order_value", "£{:,.2f}"),
     ("Orders per customer", "orders_per_customer", "{:.2f}"),
 ]):
-    col.metric(f"{label} FY2011", fmt.format(cur[field]), f"{cur[field] / prev[field] - 1:+.1%} vs FY2010")
+    value = f"£{cur[field] / 1e6:.2f}M" if field == "revenue" else fmt.format(cur[field])
+    col.metric(label, value, f"{cur[field] / prev[field] - 1:+.1%} vs FY2010")
 
 tab_rev, tab_cust, tab_prod = st.tabs(["Revenue", "Customers", "Products and markets"])
 
